@@ -1,0 +1,8 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#0a0a0a"/>
+  <rect x="40" y="40" width="1200" height="640" rx="16" fill="#171717" stroke="#262626"/>
+  <circle cx="640" cy="360" r="56" fill="#ffffff"/>
+  <path d="M625 330v60l50-30-50-30z" fill="#0a0a0a"/>
+  <text x="640" y="460" text-anchor="middle" fill="#a3a3a3" font-family="system-ui,sans-serif" font-size="22">Sales Video Poster Placeholder</text>
+  <text x="640" y="492" text-anchor="middle" fill="#737373" font-family="system-ui,sans-serif" font-size="16">Replace with /sales-video-poster.jpg</text>
+</svg>
