@@ -8,7 +8,7 @@ export const hero = {
   support:
     "Jifunze jinsi ya kutengeneza mfumo wa mauzo unaofanya kazi kuanzia kumpata mteja, kumpeleka kwenye offer yako, kupokea malipo na kumfikishia product bila wewe kutuma manually kila order.",
   cta: "NATAKA KUANZA →",
-  price: "Tsh 39,000",
+  price: "Tsh 59,000",
   ctaNote:
     "Baada ya malipo unapata link ya course kupitia WhatsApp hapo hapo",
 };
@@ -256,6 +256,13 @@ export const finalCta = {
 
 export const stickyCta = {
   text: "NATAKA KUANZA →",
+};
+
+export const offerDeadline = {
+  label: "Ofa inaishia",
+  dateLabel: "13 Novemba",
+  endsAt: "2026-11-13T23:59:59+03:00",
+  ended: "Ofa imeisha",
 };
 
 export const footer = {
