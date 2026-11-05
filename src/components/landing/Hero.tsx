@@ -1,4 +1,5 @@
 import { CheckoutButton } from "@/components/CheckoutButton";
+import { OfferDeadline } from "@/components/landing/OfferDeadline";
 import { SalesVideo } from "@/components/landing/SalesVideo";
 import { hero } from "@/content/landing";
 
@@ -36,6 +37,7 @@ export function Hero() {
           <p className="text-xl font-bold tracking-tight text-red sm:text-2xl">
             {hero.price}
           </p>
+          <OfferDeadline />
           <p className="max-w-md text-sm leading-relaxed text-muted">
             {hero.ctaNote}
           </p>

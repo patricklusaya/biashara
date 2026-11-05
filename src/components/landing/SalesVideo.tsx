@@ -28,9 +28,11 @@ export function SalesVideo({ embedded = false }: SalesVideoProps) {
   const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(1);
   const [showControls, setShowControls] = useState(true);
+  const [buffering, setBuffering] = useState(false);
   const [videoError, setVideoError] = useState(!videoSrc);
   const hit50 = useRef(false);
   const hitComplete = useRef(false);
+  const playIntent = useRef(false);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scheduleHide = useCallback(() => {
@@ -49,18 +51,36 @@ export function SalesVideo({ embedded = false }: SalesVideoProps) {
     };
   }, []);
 
-  function togglePlay() {
+  function startPlayback(event: React.SyntheticEvent) {
+    event.stopPropagation();
+    const v = videoRef.current;
+    if (!v || videoError || !videoSrc || playIntent.current || !v.paused) return;
+    playIntent.current = true;
+    const pending = v.play();
+    setBuffering(true);
+    if (pending) {
+      void pending.catch(() => {
+        playIntent.current = false;
+        setBuffering(false);
+      });
+    }
+  }
+
+  function togglePlay(event: React.SyntheticEvent) {
+    event.stopPropagation();
     const v = videoRef.current;
     if (!v || videoError || !videoSrc) return;
     if (v.paused) {
-      void v.play();
+      startPlayback(event);
     } else {
+      playIntent.current = false;
       v.pause();
     }
     scheduleHide();
   }
 
   function onPlay() {
+    setBuffering(false);
     setPlaying(true);
     setStarted(true);
     if (!started) {
@@ -70,6 +90,8 @@ export function SalesVideo({ embedded = false }: SalesVideoProps) {
   }
 
   function onPause() {
+    playIntent.current = false;
+    setBuffering(false);
     setPlaying(false);
     setShowControls(true);
   }
@@ -151,7 +173,7 @@ export function SalesVideo({ embedded = false }: SalesVideoProps) {
               className="h-full w-full object-cover"
               poster="/sales-video-poster.jpg"
               playsInline
-              preload="metadata"
+              preload="auto"
               src={videoSrc || undefined}
               onPlay={onPlay}
               onPause={onPause}
@@ -161,27 +183,33 @@ export function SalesVideo({ embedded = false }: SalesVideoProps) {
                 if (videoRef.current) setDuration(videoRef.current.duration);
               }}
               onError={() => setVideoError(true)}
-              onClick={togglePlay}
             />
 
             {/* Poster / placeholder overlay when not started or error */}
-            {(!started || videoError) && (
+            {(!started || videoError || buffering) && (
               <button
                 type="button"
-                onClick={togglePlay}
-                className="absolute inset-0 flex flex-col items-center justify-center bg-ink/55 transition-colors hover:bg-ink/45"
+                onPointerUp={startPlayback}
+                className="absolute inset-0 z-20 flex cursor-pointer touch-manipulation flex-col items-center justify-center bg-ink/55"
                 aria-label="Play video"
                 disabled={!videoSrc || videoError}
               >
-                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-md transition-transform duration-200 hover:scale-105 sm:h-[72px] sm:w-[72px]">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="ml-1 h-7 w-7 text-ink"
-                    fill="currentColor"
-                    aria-hidden
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
+                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-md sm:h-[72px] sm:w-[72px]">
+                  {buffering ? (
+                    <span
+                      className="h-7 w-7 animate-spin rounded-full border-2 border-ink/20 border-t-ink"
+                      aria-hidden
+                    />
+                  ) : (
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="ml-1 h-7 w-7 text-ink"
+                      fill="currentColor"
+                      aria-hidden
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  )}
                 </span>
                 {videoError && (
                   <p className="mt-4 max-w-xs px-4 text-center text-sm text-white/90">
@@ -206,11 +234,11 @@ export function SalesVideo({ embedded = false }: SalesVideoProps) {
             )}
 
             {/* Center play when paused mid-video */}
-            {started && !playing && !videoError && showControls && (
+            {started && !playing && !buffering && !videoError && showControls && (
               <button
                 type="button"
-                onClick={togglePlay}
-                className="absolute inset-0 flex items-center justify-center bg-ink/30"
+                onPointerUp={startPlayback}
+                className="absolute inset-0 z-20 flex cursor-pointer touch-manipulation items-center justify-center bg-ink/30"
                 aria-label="Play"
               >
                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 shadow">
@@ -228,9 +256,9 @@ export function SalesVideo({ embedded = false }: SalesVideoProps) {
 
             {/* Controls bar */}
             <div
-              className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2.5 pt-10 transition-opacity duration-300 ${
-                showControls || !playing ? "opacity-100" : "opacity-0"
-              }`}
+              className={`absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2.5 pt-10 transition-opacity duration-300 ${
+                !started || buffering ? "pointer-events-none" : ""
+              } ${showControls || !playing ? "opacity-100" : "opacity-0"}`}
             >
               <div className="mb-2">
                 <input

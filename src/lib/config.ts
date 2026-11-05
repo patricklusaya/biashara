@@ -12,6 +12,9 @@ export const SALES_VIDEO_URL =
 
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "";
 
+/** 0658128120 → international format for wa.me */
+export const WHATSAPP_URL = "https://wa.me/255658128120";
+
 export const SITE = {
   name: "Fursa za Biashara",
   title: "Fursa za Biashara — Jenga Mfumo wa Kuuza Digital Products",

@@ -1,4 +1,4 @@
-import { SITE } from "@/lib/config";
+import { SITE, WHATSAPP_URL } from "@/lib/config";
 import { footer } from "@/content/landing";
 
 export function Footer() {
@@ -17,7 +17,7 @@ export function Footer() {
               {footer.terms}
             </a>
             <a
-              href={footer.contactHref}
+              href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-ink"

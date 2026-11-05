@@ -10,6 +10,7 @@ import { Guarantee } from "@/components/landing/Guarantee";
 import { FAQ } from "@/components/landing/FAQ";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { StickyCTA } from "@/components/landing/StickyCTA";
+import { FloatingPhone } from "@/components/WhatsAppButton";
 import { Footer } from "@/components/landing/Footer";
 
 export default function HomePage() {
@@ -28,6 +29,7 @@ export default function HomePage() {
       <FinalCTA />
       <Footer />
       <StickyCTA />
+      <FloatingPhone />
     </main>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { CHECKOUT_URL } from "@/lib/config";
 import { trackEvent } from "@/lib/analytics";
 
@@ -16,12 +17,16 @@ export function CheckoutButton({
   variant = "primary",
   fullWidth = false,
 }: CheckoutButtonProps) {
+  const [loading, setLoading] = useState(false);
+
   function handleClick() {
+    if (loading) return;
+    setLoading(true);
     trackEvent("InitiateCheckout", {
       content_name: "Digital Product Sales System",
       content_category: "course",
     });
-    window.location.href = CHECKOUT_URL;
+    window.location.assign(CHECKOUT_URL);
   }
 
   const base =
@@ -38,9 +43,21 @@ export function CheckoutButton({
     <button
       type="button"
       onClick={handleClick}
+      disabled={loading}
+      aria-busy={loading}
       className={`${base} ${variants[variant]} ${fullWidth ? "w-full" : ""} ${className}`}
     >
-      {children}
+      {loading ? (
+        <>
+          <span
+            className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
+            aria-hidden
+          />
+          Inapakia...
+        </>
+      ) : (
+        children
+      )}
     </button>
   );
 }

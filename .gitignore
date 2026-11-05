@@ -41,3 +41,5 @@ next-env.d.ts
 
 # unrelated nested project (do not deploy with this landing page)
 /fursa-za-biashara
+
+.vercel

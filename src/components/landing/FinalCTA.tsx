@@ -1,5 +1,6 @@
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { FadeIn } from "@/components/FadeIn";
+import { OfferDeadline } from "@/components/landing/OfferDeadline";
 import { finalCta } from "@/content/landing";
 
 export function FinalCTA() {
@@ -14,6 +15,7 @@ export function FinalCTA() {
             {finalCta.text}
           </p>
           <div className="mt-8 flex flex-col items-center gap-3">
+            <OfferDeadline tone="dark" />
             <CheckoutButton className="min-w-[220px]">
               {finalCta.cta}
             </CheckoutButton>
