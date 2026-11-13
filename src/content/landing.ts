@@ -260,8 +260,8 @@ export const stickyCta = {
 
 export const offerDeadline = {
   label: "Ofa inaishia",
-  dateLabel: "13 Novemba",
-  endsAt: "2026-11-13T23:59:59+03:00",
+  dateLabel: "20 Novemba",
+  endsAt: "2026-11-20T23:59:59+03:00",
   ended: "Ofa imeisha",
 };
 
