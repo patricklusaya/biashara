@@ -8,7 +8,7 @@ export const hero = {
   support:
     "Jifunze jinsi ya kutengeneza mfumo wa mauzo unaofanya kazi kuanzia kumpata mteja, kumpeleka kwenye offer yako, kupokea malipo na kumfikishia product bila wewe kutuma manually kila order.",
   cta: "NATAKA KUANZA →",
-  price: "Tsh 59,000",
+  price: "Tsh 69,000",
   ctaNote:
     "Baada ya malipo unapata link ya course kupitia WhatsApp hapo hapo",
 };
